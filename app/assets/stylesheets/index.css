@@ -2,7 +2,31 @@
     margin:0 auto;
     display: block;
     background:#f5f5f5;
-    width:380px;
+    width:500px;
+    height:200px;
+    padding: 20px;
+    border-radius:5px;
+}
+.body-right-1{
+    position: absolute;
+    left: 800px;
+    top: 135px;
+}
+.body-right-2{
+    position: absolute;
+    left: 800px;
+    top: 235px;
+}
+.body-right-3{
+    position: absolute;
+    left: 1150px;
+    top: 10px;
+}
+.register-box{
+    margin:0 auto;
+    display: block;
+    background:#f5f5f5;
+    width:500px;
     height:300px;
     padding: 20px;
     border-radius:5px;

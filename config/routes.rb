@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get '/login' => "user#login"
+  root "user#login"
+
+  get '/welcome' => "user#welcome"
+  get '/register' => "user#register"
   #post
   #resources :users,only:[:create]
 
