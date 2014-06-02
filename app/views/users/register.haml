@@ -1,0 +1,31 @@
+.form
+  .container(style="margin:10px 50px" )
+    %h1 活动通
+  .row(style="width:1320px" )
+    .register-box
+      %h4 新用户注册
+      %br
+      .body-right-1
+        %a(href = "/") 用户登录
+      =form_for @user do |f|
+        .input-prepend
+          %span.add-on(style="width:100px") 账号
+          =f.text_field :name, :class => 'form-control'
+        %br
+        .input-prepend
+          %span.add-on( style="width:100px") 请设置密码
+          =f.password_field :password_digest, :class => 'form-control'
+        %br
+        .input-prepend
+          %span.add-on(style="width:100px") 请确认密码
+          =f.password_field :forget_password_question, :class => 'form-control'
+        %br
+        .input-prepend
+          %span.add-on(style="width:100px") 忘记密码问题
+          =f.text_field :question_answer, :class => 'form-control'
+        %br
+        .input-prepend
+          %span.add-on(style="width:100px") 忘记密码答案
+          =f.text_field :token, :class => 'form-control'
+        %br
+        =f.submit '注册',:class => 'submit',:style => 'width:150px'

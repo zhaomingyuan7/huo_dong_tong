@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source source="LOCAL" name="Rails huo_dong_tong: development" uuid="ade132df-e40d-4e6e-b546-bb78a0b9ab1b">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
-  </data-source>
-  <data-source source="LOCAL" name="Rails huo_dong_tong: test" uuid="47ef3a1a-5fed-41e0-9062-169846c6849c">
+  <data-source source="LOCAL" name="SQLite - 20140602055412_create_users.rb" uuid="20bca52b-064c-45c9-88af-f36914f15702">
     <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
 </component>
