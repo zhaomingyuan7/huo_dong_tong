@@ -10,13 +10,13 @@ class UsersController < ApplicationController
     @user = User.new
   end
   def create
-
+    params.permit!
     @user = User.new(params[:user])
-    @user.save
-    p''''''''''''''''
-    p @user
-    p''''''''''''''''
-    cookies.permanent[:token]=@user.token
-    redirect_to :'welcome'
+    if @user.save
+      cookies.permanent[:token]=@user.token
+      redirect_to :'welcome'
+    else
+      render :register
+    end
   end
 end

@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1779957433">
-    <data-source source="LOCAL" name="SQLite - 20140602055412_create_users.rb" uuid="20bca52b-064c-45c9-88af-f36914f15702">
+  <component name="DataSourceManagerImpl" format="xml" hash="3049789318">
+    <data-source source="LOCAL" name="SQLite - customer_access_development" uuid="8d09d1c5-a8ee-4ef9-a8df-17199eeacfda">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/migrate/20140602055412_create_users.rb</jdbc-url>
-      <libraries />
-    </data-source>
-    <data-source source="LOCAL" name="Rails huo_dong_tong: development" uuid="ac5bb58c-0874-4d31-9ac4-c0087e17e2c7">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/customer_access_development</jdbc-url>
-      <libraries />
-    </data-source>
-    <data-source source="LOCAL" name="Rails huo_dong_tong: test" uuid="e37a5769-043a-4260-898b-e432b1b0b0e3">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/customer_access_test</jdbc-url>
       <libraries />
     </data-source>
   </component>
