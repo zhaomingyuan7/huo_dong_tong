@@ -28,8 +28,4 @@
           %span.add-on(style="width:100px") 忘记密码答案
           =f.text_field :question_answer, :class => 'form-control', :style => 'width:380px'
         %br
-          - if @user.errors.any?
-            .alert.alert-danger
-              =@user.errors.full_messages.first
-        %br
         =f.submit '注册',:class => 'submit',:style => 'width:150px'
