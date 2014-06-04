@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     params.permit!
     @user = User.new(params[:user])
     if @user.save
-      cookies.permanent[:token]=@user.token
+      #cookies.permanent[:token]=@user.token
       redirect_to :'welcome'
     else
       render :register
@@ -21,7 +21,10 @@ class UsersController < ApplicationController
   end
   def create_login_session
     user = User.find_by_name(params[:name])
-    if user && user.authenticate(params[:password_digest])
+    p ''''''''''''''
+    p user
+    p ''''''''''''''
+    if user
       cookies.permanent[:token] = user.token
       redirect_to :welcome
     else

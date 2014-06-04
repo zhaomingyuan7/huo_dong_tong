@@ -10,11 +10,11 @@
       =form_tag '/create_login_session' do
         .input-prepend
           %span.add-on(style="width:60px") 用户名
-          =text_field_tag :user_name,params[:name],:style=>'width:410px'
+          =text_field_tag :name,params[:name],:style=>'width:410px'
         %br
         .input-prepend
           %span.add-on(style="width:60px") 密码
-          =password_field_tag :password,params[:password_digest], :class => 'form-control',:style=>'width:410px'
+          =password_field_tag :password_digest,params[:password_digest],:style=>'width:410px'
         .body-right-2
           %a
             忘记密码
@@ -23,4 +23,4 @@
           .alert.alert-danger
             =flash[:error]
         %br
-          =submit_tag '登录',:class => 'btn-local'
+          =submit_tag '登录',:style=>'width:200px',:location => 'center'
