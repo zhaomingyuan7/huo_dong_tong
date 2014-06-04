@@ -18,14 +18,18 @@
         %br
         .input-prepend
           %span.add-on(style="width:100px") 请确认密码
-          =f.password_field :forget_password_question, :class => 'form-control', :style => 'width:380px'
+          =f.password_field :password_confirmation, :class => 'form-control', :style => 'width:380px'
         %br
         .input-prepend
           %span.add-on(style="width:100px") 忘记密码问题
-          =f.text_field :question_answer, :class => 'form-control', :style => 'width:380px'
+          =f.text_field :forget_password_question, :class => 'form-control', :style => 'width:380px'
         %br
         .input-prepend
           %span.add-on(style="width:100px") 忘记密码答案
-          =f.text_field :token, :class => 'form-control', :style => 'width:380px'
+          =f.text_field :question_answer, :class => 'form-control', :style => 'width:380px'
+        %br
+          - if @user.errors.any?
+            .alert.alert-danger
+              =@user.errors.full_messages.first
         %br
         =f.submit '注册',:class => 'submit',:style => 'width:150px'

@@ -14,13 +14,9 @@
         %br
         .input-prepend
           %span.add-on(style="width:60px") 密码
-          =password_field_tag :password_digest,params[:password_digest],:style=>'width:410px'
+          =password_field_tag :password,params[:password],:style=>'width:410px'
         .body-right-2
           %a
             忘记密码
         %br
-        - if flash[:error]
-          .alert.alert-danger
-            =flash[:error]
-        %br
-          =submit_tag '登录',:style=>'width:200px',:location => 'center'
+          =submit_tag '登录',:class => 'button primary',:style=>'width:200px',:location => 'center'
