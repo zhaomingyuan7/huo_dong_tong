@@ -12,4 +12,7 @@ class User < ActiveRecord::Base
   def user_params
     params.require(:user).permit(:name, :password_digest, :forget_password_question, :question_answer, :token)
   end
+  def self.get_activity(user_name)
+    User.find_by_user_name(user_name)
+  end
 end

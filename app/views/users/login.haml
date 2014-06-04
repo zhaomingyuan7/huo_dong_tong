@@ -1,22 +1,26 @@
-.container(style="margin:10px 50px" )
-  %h1 活动通
-.row(style="width:1320px" )
-  .login-box
-    %h4 用户登录
-    %br
-    .body-right-1
-      %a(href = '/register')用户注册
-    .input-prepend
-      %span.add-on(style="width:60px") 用户名
-      %input#prependedInput(style="width:410px" type = "text")
-    %br
-    .input-prepend
-      %span.add-on(style="width:60px") 密码
-      %input#prependedInput(style="width:410px" type="password")
-    .body-right-2
-      %a
-        忘记密码
-    %br
+.form
+  .container(style="margin:10px 50px" )
+    %h1 活动通
+  .row(style="width:1320px" )
+    .login-box
+      %h4 用户登录
       %br
-      %center
-        %button.btn-4(style="width:150px" type="submit" href = '/welcome')登录
+      .body-right-1
+        %a(href = '/register')用户注册
+      =form_tag '/create_login_session' do
+        .input-prepend
+          %span.add-on(style="width:60px") 用户名
+          =text_field_tag :user_name,params[:name],:style=>'width:410px'
+        %br
+        .input-prepend
+          %span.add-on(style="width:60px") 密码
+          =password_field_tag :password,params[:password_digest], :class => 'form-control',:style=>'width:410px'
+        .body-right-2
+          %a
+            忘记密码
+        %br
+        - if flash[:error]
+          .alert.alert-danger
+            =flash[:error]
+        %br
+          =submit_tag '登录',:class => 'btn-local'

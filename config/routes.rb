@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'users#login'
   get '/welcome' => 'users#welcome'
   get '/register' => 'users#register'
+  post 'create_login_session' => 'users#create_login_session'
   #get '/users/new' => 'users#new'
   #post '/create' => 'users#create'
   resources :users,only: [:create]

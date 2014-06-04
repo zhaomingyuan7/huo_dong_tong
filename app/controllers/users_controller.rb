@@ -19,4 +19,15 @@ class UsersController < ApplicationController
       render :register
     end
   end
+  def create_login_session
+    user = User.find_by_name(params[:name])
+    if user && user.authenticate(params[:password_digest])
+      cookies.permanent[:token] = user.token
+      redirect_to :welcome
+    else
+      flash[:error]='用户名不存在或密码错误'
+      redirect_to :login
+    end
+  end
+
 end
