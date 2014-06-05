@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/welcome' => 'users#welcome'
   get '/register' => 'users#register'
   post 'create_login_session' => 'users#create_login_session'
-  delete 'logout' => 'users#logout'
+  delete 'logout' => 'users#login'
   #get '/users/new' => 'users#new'
   #post '/create' => 'users#create'
   resources :users,only: [:create]

@@ -2,21 +2,22 @@ zh-CN:
   activerecord:
     attributes:
       user:
-        name: "账号"
-        password_digest: "密码"
-        password_confirmation: "再次输入密码"
-        forget_password_question: "忘记密码问题"
-        question_answer: "忘记密码答案"
+        name: ""
+        password: ""
+        password_confirmation: ""
+        forget_password_question: ""
+        question_answer: ""
     errors:
       models:
         user:
           attributes:
             name:
               blank: "帐号不能为空"
-            password_digest:
-             blank: "密码不能为空"
+              taken: "该账号已注册"
+            password:
+              blank: "密码不能为空"
             password_confirmation:
-              blank: "再次输入密码不能为空"
+              confirmation: "两次密码输入不一致，请重新输入"
             forget_password_question:
               blank: "忘记密码问题不能为空"
             question_answer:

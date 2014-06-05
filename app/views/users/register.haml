@@ -8,26 +8,26 @@
       .body-right-1
         %a(href = "/") 用户登录
       =form_for @user do |f|
-        .input-prepend
-          %span.add-on(style="width:100px") 账号
+        .input-group
+          %span.input-group-addon( style = "width:109px" ) 账号
           =f.text_field :name, :class => 'form-control', :style => 'width:380px'
         %br
-        .input-prepend
-          %span.add-on( style="width:100px") 请设置密码
-          =f.password_field :password_digest, :class => 'form-control', :style => 'width:380px'
+        .input-group
+          %span.input-group-addon( style="width:100px") 请设置密码
+          =f.password_field :password, :class => 'form-control', :style => 'width:380px'
         %br
-        .input-prepend
-          %span.add-on(style="width:100px") 请确认密码
+        .input-group
+          %span.input-group-addon(style="width:100px") 请确认密码
           =f.password_field :password_confirmation, :class => 'form-control', :style => 'width:380px'
         %br
-        .input-prepend
-          %span.add-on(style="width:100px") 忘记密码问题
+        .input-group
+          %span.input-group-addon(style="width:100px") 忘记密码问题
           =f.text_field :forget_password_question, :class => 'form-control', :style => 'width:380px'
         %br
-        .input-prepend
-          %span.add-on(style="width:100px") 忘记密码答案
+        .input-group
+          %span.input-group-addon(style="width:100px") 忘记密码答案
           =f.text_field :question_answer, :class => 'form-control', :style => 'width:380px'
-        - if @user.errors[:name].any?
+        - if @user.errors.any?
           .alert.alert-danger
-            %dd.error= @user.errors[:name][0]
+            =@user.errors.full_messages.first
         =f.submit '注册',:class => 'submit',:style => 'width:150px'

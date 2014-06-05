@@ -8,13 +8,14 @@
       .body-right-1
         %a(href = '/register')用户注册
       =form_tag '/create_login_session' do
-        .input-prepend
-          %span.add-on(style="width:60px") 用户名
-          =text_field_tag :name,params[:name],:style=>'width:410px'
+        .input-group
+          %span.input-group-addon( style = "width:109px" ) 账号
+          %input.form-control(name = 'name' type = "text" style = 'width:400px')
         %br
-        .input-prepend
-          %span.add-on(style="width:60px") 密码
-          =password_field_tag :password,params[:password],:style=>'width:410px'
+        .input-group
+          %span.input-group-addon( style="width:109px" ) 密码
+          %input.form-control(name = 'password' type = "password" style = 'width:400px' )
+        %br
         .body-right-2
           %a
             忘记密码
