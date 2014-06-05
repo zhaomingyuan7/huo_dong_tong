@@ -20,7 +20,6 @@ class UsersController < ApplicationController
       cookies.permanent[:token] = @user.token
         redirect_to :'welcome'
     else
-      #flash[:error] = "无效的用户名和密码"
       render :register
     end
   end
@@ -30,7 +29,6 @@ class UsersController < ApplicationController
     if user && user.authenticate(params[:password_digest])
       redirect_to :welcome
     else
-      flash[:error]='用户名不存在或密码错误'
       redirect_to :login
     end
   end
