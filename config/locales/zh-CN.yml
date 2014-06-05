@@ -1,0 +1,26 @@
+zh-CN:
+  activerecord:
+    attributes:
+      user:
+        name: ""
+        password_digest: ""
+        password_confirmation: ""
+        forget_password_question: ""
+        question_answer: ""
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "帐号不能为空"
+              taken: "该账号已注册"
+            password_digest:
+              blank: "密码不能为空"
+            password_confirmation:
+              confirmation: "两次密码输入不一致，请重新输入"
+            password_digest:
+              blank: "请将注册信息填写完整"
+            forget_password_question:
+              blank: "忘记密码问题不能为空"
+            question_answer:
+              blank: "问题答案不能为空"

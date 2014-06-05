@@ -17,9 +17,10 @@ class UsersController < ApplicationController
     params.permit!
     @user = User.new(params[:user])
     if @user.save
-      cookies.permanent[:token]=@user.token
-      redirect_to :'welcome'
+      cookies.permanent[:token] = @user.token
+        redirect_to :'welcome'
     else
+      #flash[:error] = "无效的用户名和密码"
       render :register
     end
   end
@@ -32,6 +33,11 @@ class UsersController < ApplicationController
       flash[:error]='用户名不存在或密码错误'
       redirect_to :login
     end
+  end
+
+  def logout
+    cookies.delete(:token)
+    redirect_to :login
   end
 
 end
