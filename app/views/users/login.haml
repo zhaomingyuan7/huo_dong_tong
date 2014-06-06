@@ -19,5 +19,7 @@
         .body-right-2
           %a
             忘记密码
-        %br
-          =submit_tag'登录',:class => 'submit',:style=>' width:130px;margin-left: 170px;'
+        - if flash[:error]
+          .alert.alert-danger
+            =flash[:error]
+        =submit_tag'登录',:class => 'submit',:style=>' width:130px;margin-left: 170px;'

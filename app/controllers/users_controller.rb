@@ -33,6 +33,7 @@ class UsersController < ApplicationController
       cookies.permanent[:token] = user.token
       redirect_to :welcome
     else
+      flash[:error]='用户名不存在或密码错误'
       render :login
     end
   end
