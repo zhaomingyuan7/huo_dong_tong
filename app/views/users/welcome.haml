@@ -10,7 +10,6 @@
     用户管理
     %button +添加用户
     %thead
-      %tr
       %td(align="center")编号
       %td(align="center") 用户名
       %td(align="center") 操作
@@ -24,3 +23,5 @@
           %td(align="center" style="width:37%")
             =link_to '删除'
             =link_to '修改密码'
+  .right-padding(align="right")
+    = will_paginate

@@ -5,6 +5,8 @@ class UsersController < ApplicationController
 
   def welcome
     @users=User.all
+    #@users = User.paginate(:page => params[:page], :per_page => 10, :order => 'updated_at DESC')
+    @users = User.paginate(page: params[:page],per_page:10)
   end
 
 
@@ -39,26 +41,5 @@ class UsersController < ApplicationController
     cookies.delete(:token)
     redirect_to :login
   end
-
-  #def choose_user_to_add
-  #  @users = User.all
-  #end
-
-  #helper_method :users
-
-  #def users
-  #  @users ||= User.all
-  #end
-
-  #def manage_index
-  #  @user = User.paginate(page: params[:page])
-  #  p'========================='
-  #  p @user
-  #  p'============================'
-  #end
-
-  #@user_name = User.find(session[:user_id]).name
-  #@activities = Activity.where(:user_name => @user_name).paginate(page: params[:page],:per_page => 10)
-  #@current_user = User.find(session[:user_id]).name
 
 end
