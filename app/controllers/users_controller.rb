@@ -5,7 +5,6 @@ class UsersController < ApplicationController
 
   def welcome
     @users=User.all
-    #@users = User.paginate(:page => params[:page], :per_page => 10, :order => 'updated_at DESC')
     @users = User.paginate(page: params[:page],per_page:10)
   end
 
@@ -30,10 +29,11 @@ class UsersController < ApplicationController
 
   def create_login_session
     user = User.find_by_name(params[:name])
-    if user && user.authenticate(params[:password_digest])
+    if user && user.authenticate(params[:password])
+      cookies.permanent[:token] = user.token
       redirect_to :welcome
     else
-      redirect_to :login
+      render :login
     end
   end
 
