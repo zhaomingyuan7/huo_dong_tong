@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/register' => 'users#register'
   post 'create_login_session' => 'users#create_login_session'
   delete 'logout' => 'users#login'
+  get '/manage_index' => 'users#welcome'
   #get '/users/new' => 'users#new'
   #post '/create' => 'users#create'
   resources :users,only: [:create]

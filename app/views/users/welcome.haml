@@ -5,3 +5,22 @@
     -if current_user
       =current_user.name
       =link_to '退出',logout_path,method: 'delete'
+.welcome-box
+  %table.table
+    用户管理
+    %button +添加用户
+    %thead
+      %tr
+      %td(align="center")编号
+      %td(align="center") 用户名
+      %td(align="center") 操作
+    %tbody
+      -@users.each do|user|
+        %tr
+          %td(align="center" style="width:37%")
+            =user.id
+          %td(align="center" style="width:37%")
+            =user.name
+          %td(align="center" style="width:37%")
+            =link_to '删除'
+            =link_to '修改密码'

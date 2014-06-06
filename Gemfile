@@ -31,6 +31,8 @@ gem 'haml'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'protected_attributes', '1.0.5'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 
 # Use unicorn as the app server
 # gem 'unicorn'
