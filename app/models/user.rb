@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   validates :name, :presence => true,  :uniqueness => {:case_sensitive => false}
   validates :forget_password_question, :presence => true
   validates :question_answer, :presence => true
-  validates :password_digest, :presence => true
   validates :password_confirmation, :presence => true
 
   def generate_token(column)
@@ -14,9 +13,10 @@ class User < ActiveRecord::Base
     end while User.exists?(column=>self[column])
   end
   def user_params
-    params.require(:user).permit(:name, :password, :forget_password_question, :question_answer, :token)
+    params.require(:user).permit(:name, :password, :password_confirmation, :forget_password_question, :question_answer, :token)
   end
   def self.get_activity(user_name)
     User.find_by_user_name(user_name)
   end
 end
+#user = User.create({:name=>'admin', :password=>'admin', :password_confirmation => 'admin',:admin => true, :token=>'kajdlioew%^%hjks', :forget_password_question=>'admin', :question_answer=>'admin'})

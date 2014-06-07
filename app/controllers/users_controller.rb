@@ -12,6 +12,9 @@ class UsersController < ApplicationController
   def post
   end
 
+  def welcome_user
+  end
+
   def register
     @user = User.new
   end
@@ -19,6 +22,9 @@ class UsersController < ApplicationController
   def create
     params.permit!
     @user = User.new(params[:user])
+    p'=========================================================='
+    p @user
+    p'=========================================================='
     if @user.save
       cookies.permanent[:token] = @user.token
       redirect_to :'welcome'
@@ -31,7 +37,14 @@ class UsersController < ApplicationController
     user = User.find_by_name(params[:name])
     if user && user.authenticate(params[:password])
       cookies.permanent[:token] = user.token
-      redirect_to :welcome
+      p'=========================================================='
+      p user.admin
+      p'=========================================================='
+      if user.admin?
+        redirect_to :welcome
+      else
+        redirect_to :welcome_user
+      end
     else
       flash[:error]='用户名不存在或密码错误'
       render :login

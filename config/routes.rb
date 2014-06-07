@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   #get '/users/new' => 'users#new'
   #post '/create' => 'users#create'
   resources :users,only: [:create]
+  get '/welcome_user' => 'users#welcome_user'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
