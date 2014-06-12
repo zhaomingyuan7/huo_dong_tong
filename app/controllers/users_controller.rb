@@ -22,12 +22,9 @@ class UsersController < ApplicationController
   def create
     params.permit!
     @user = User.new(params[:user])
-    p'=========================================================='
-    p @user
-    p'=========================================================='
     if @user.save
       cookies.permanent[:token] = @user.token
-      redirect_to :'welcome'
+      redirect_to :'welcome_user'
     else
       render :register
     end
@@ -37,9 +34,6 @@ class UsersController < ApplicationController
     user = User.find_by_name(params[:name])
     if user && user.authenticate(params[:password])
       cookies.permanent[:token] = user.token
-      p'=========================================================='
-      p user.admin
-      p'=========================================================='
       if user.admin?
         redirect_to :welcome
       else

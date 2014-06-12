@@ -1,14 +1,14 @@
 .container(style="margin:10px 50px" )
-  %h1 活动通
-  .body-right-3
-    你好,
+  .navbar-nav.navbar-right
+    你好,管理员
     -if current_user
-      =current_user.name
       =link_to '退出',logout_path,method: 'delete'
+  %h1 活动通
 .welcome-box
   %table.table
-    用户管理
-    %button +添加用户
+    %thead
+      用户管理
+      %button +添加用户
     %thead
       %td(align="center")编号
       %td(align="center") 用户名
@@ -24,4 +24,4 @@
             =link_to '删除'
             =link_to '修改密码'
   .right-padding(align="right")
-    = will_paginate
+    = will_paginate @users, :previous_label=> '<<', :next_label=> '>>'
