@@ -50,4 +50,7 @@ class UsersController < ApplicationController
     redirect_to :login
   end
 
+  def add_user
+  end
+
 end
