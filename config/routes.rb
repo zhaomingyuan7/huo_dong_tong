@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :users,only: [:create]
   get '/welcome_user' => 'users#welcome_user'
   get 'add_user' => 'admin#add_user',:as => 'add_user'
+  get 'index_welcome' => 'users#welcome',:as => 'index_welcome'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

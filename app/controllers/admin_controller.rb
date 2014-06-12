@@ -15,5 +15,8 @@ class AdminController < ApplicationController
     end
     @user = User.new
   end
+  def index_welcome
+
+  end
 
 end
