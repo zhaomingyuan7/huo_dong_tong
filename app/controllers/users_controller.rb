@@ -8,10 +8,6 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page],per_page:10)
   end
 
-
-  def post
-  end
-
   def welcome_user
   end
 
@@ -49,8 +45,4 @@ class UsersController < ApplicationController
     cookies.delete(:token)
     redirect_to :login
   end
-
-  def add_user
-  end
-
 end
