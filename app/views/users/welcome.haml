@@ -24,12 +24,5 @@
           %td(align="center" style="width:37%")
             =link_to '删除', delete_user_path(:name=>user[:name]),data: { confirm: '您确定要删除'+user[:name]+'？'},:method => :delete
             =link_to '修改密码'
-            -#=link_to '删除'
-            -#%li
-            -#  = gravatar_for user, size: 52
-            -#  = link_to user.name, user
-            -#  - if current_user.admin? && !current_user?(user)
-            -#    | #{link_to "delete", user, method: :delete,   data: { confirm: "You sure?" }}
-            -#=link_to '修改密码'
   .right-padding(align="right")
     = will_paginate @users, :previous_label=> '<<', :next_label=> '>>'
