@@ -6,7 +6,7 @@ class AdminController < ApplicationController
     @user = User.new
   end
   def delete_user
-    User.get_activity(params[:user_name]).delete
+    User.get_activity(params[:name]).delete
     redirect_to :welcome
   end
   #def admin_user

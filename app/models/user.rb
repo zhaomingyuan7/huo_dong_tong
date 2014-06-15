@@ -15,8 +15,8 @@ class User < ActiveRecord::Base
   def user_params
     params.require(:user).permit(:name, :password, :password_confirmation, :forget_password_question, :question_answer, :token)
   end
-  def self.get_activity(user_name)
-    User.find_by_user_name(user_name)
+  def self.get_activity(name)
+    User.find_by_name(name)
   end
 end
 #user = User.create({:name=>'admin', :password=>'admin', :password_confirmation => 'admin',:admin => true, :token=>'kajdlioew%^%hjks', :forget_password_question=>'admin', :question_answer=>'admin'})
