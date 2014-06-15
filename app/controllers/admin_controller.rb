@@ -1,22 +1,28 @@
 class AdminController < ApplicationController
+  #before_action :signed_in_user, only: [:index, :edit, :update, :destroy]
+  #before_action :correct_user,   only: [:edit, :update]
+  #before_action :admin_user,     only: :destroy
   def add_user
-    #params.permit!
-    #@user = User.new(params[:user])
-    #if @user.save
-    #  cookies.permanent[:token] = @user.token
-    #  redirect_to :'welcome_user'
-    #else
-    #  render :register
-    #end
-    if !current_user
-      redirect_to :welcome
-    #else
-    #  render :add_user
-    end
     @user = User.new
   end
-  def index_welcome
-
+  def delete_user
+    User.get_activity(params[:user_name]).delete
+    redirect_to :welcome
   end
+  #def admin_user
+  #  redirect_to(root_path) unless current_user.admin?
+  #end
+  def index_welcome
+  end
+
+  #def destroy
+  #  User.find(params[:id]).destroy
+  #  flash[:success] = 'User destroyed.'
+  #  redirect_to :login
+  #end
+
+  #def admin_user
+  #  redirect_to(root_path) unless current_user.admin?
+  #end
 
 end

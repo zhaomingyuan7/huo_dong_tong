@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   delete 'logout' => 'users#login'
   resources :users,only: [:create]
   get '/welcome_user' => 'users#welcome_user'
-  get 'add_user' => 'admin#add_user',:as => 'add_user'
+  get '/add_user' => 'admin#add_user',:as => 'add_user'
   get 'index_welcome' => 'users#welcome',:as => 'index_welcome'
+  delete '/delete_user'=>'admin#delete_user' ,:as => 'delete_user'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

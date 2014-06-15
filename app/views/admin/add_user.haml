@@ -15,12 +15,6 @@
     .add-user-box
       =form_for @user do |f|
         .input-group
-          -#=render "shared/header"
-          -#.body
-          -#  %ol.breadcrumb
-          -#    %li
-          -#      =link_to "首页",manager_index_path
-          -#    %li.active 添加用户
           %span.input-group-addon(style="width:110px") 账号
           =f.text_field :name, :class => 'form-control', :style => 'width:345px'
         %br
