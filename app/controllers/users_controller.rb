@@ -16,16 +16,23 @@ class UsersController < ApplicationController
   end
 
   def create
-    params.permit!
     @user = User.new(params[:user])
-    if @user.save
-      cookies.permanent[:token] = @user.token
-      redirect_to :'welcome_user'
+    if current_user
+      if @user.save
+        redirect_to :welcome
+      else
+        render 'admin/add_user'
+      end
     else
-      render :register
+      if @user.save
+        cookies.permanent[:token] = @user.token
+        redirect_to :welcome_user
+      else
+        render :register
+      end
     end
   end
-  
+
   def create_login_session
     user = User.find_by_name(params[:name])
     if user && user.authenticate(params[:password])
