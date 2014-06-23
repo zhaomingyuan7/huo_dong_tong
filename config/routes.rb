@@ -3,10 +3,11 @@ Rails.application.routes.draw do
   get '/welcome' => 'users#welcome'
   get '/register' => 'users#register'
   post 'create_login_session' => 'users#create_login_session'
-  delete 'logout' => 'users#login'
+  get 'login' => 'users#login'
+  delete 'logout' => 'users#logout', :as => 'logout'
   resources :users,only: [:create]
   get '/welcome_user' => 'users#welcome_user'
-  get '/add_user' => 'admin#add_user',:as => 'add_user'
+  get 'add_user' => 'admin#add_user',:as => 'add_user'
   get 'index_welcome' => 'users#welcome',:as => 'index_welcome'
   delete '/delete_user'=>'admin#delete_user' ,:as => 'delete_user'
 

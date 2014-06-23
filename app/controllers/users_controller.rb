@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       render :register
     end
   end
-
+  
   def create_login_session
     user = User.find_by_name(params[:name])
     if user && user.authenticate(params[:password])
