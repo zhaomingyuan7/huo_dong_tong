@@ -1,11 +1,17 @@
 #encoding: utf-8
 class UsersController < ApplicationController
+
   def login
   end
 
   def welcome
-    @users=User.all
-    @users = User.paginate(page: params[:page],per_page:10)
+    if !current_user
+      redirect_to :login
+    else
+      @users=User.all
+      @users = User.paginate(page: params[:page],per_page:10)
+
+    end
   end
 
   def welcome_user
