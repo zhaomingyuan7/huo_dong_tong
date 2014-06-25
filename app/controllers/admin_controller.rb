@@ -16,4 +16,7 @@ class AdminController < ApplicationController
   def index_welcome
   end
 
+  def change_password
+  end
+
 end

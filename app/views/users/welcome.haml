@@ -23,6 +23,6 @@
             =user.name
           %td(align="center" style="width:37%")
             =link_to '删除',delete_user_path(:name=>user[:name]), data: { confirm: '您确定要删除'+user[:name]+'？'}, :method => :delete
-            =link_to '修改密码'
+            =link_to '修改密码',change_password_path
   .right-padding(align="right")
     = will_paginate @users, :previous_label=> '<<', :next_label=> '>>'
