@@ -17,6 +17,7 @@ class AdminController < ApplicationController
   end
 
   def change_password
+    @user = User.new
   end
 
 end
