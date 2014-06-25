@@ -1,7 +1,11 @@
 class AdminController < ApplicationController
 
   def add_user
-    @user = User.new
+    if !current_user
+      redirect_to :login
+    else
+      @user = User.new
+    end
   end
 
   def delete_user

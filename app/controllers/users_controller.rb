@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       redirect_to :login
     else
       @users=User.all
-      @users = User.paginate(page: params[:page],per_page:10)
+      @users = User.paginate(page: params[:page],per_page:10).where(:admin => false)
 
     end
   end
