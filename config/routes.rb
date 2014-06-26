@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   get 'add_user' => 'admin#add_user',:as => 'add_user'
   get 'index_welcome' => 'users#welcome',:as => 'index_welcome'
   delete 'delete_user'=>'admin#delete_user' ,:as => 'delete_user'
-  get 'change_password' => 'admin#change_password', :as => 'change_password'
-
+  get '/change_password' => 'admin#change_password', :as => 'change_password'
+  post 'post_password' => 'admin#post_password'
+  #post 'create_login_session' => 'users#create_login_session'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
