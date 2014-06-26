@@ -17,22 +17,25 @@ class AdminController < ApplicationController
   end
 
   def change_password
-    session[:name]= params[:name]
+    if !current_user
+      redirect_to :login
+    else
+      session[:name]= params[:name]
+    end
   end
 
   def post_password
     @user = User.get_activity(session[:name])
-    if params[:user][:password]!= params[:user][:password_confirmation]
+    if params[:user][:password]!= params[:user][:password_confirmation] || params[:user][:password]== ''
       flash[:error]='两次密码输入不一致，请重新输入'
       render :change_password
     else
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]
       if @user.save
-        flash[:error]='chenggong'
+        flash[:error]='成功'
         render :change_password
       end
     end
   end
-
 end
