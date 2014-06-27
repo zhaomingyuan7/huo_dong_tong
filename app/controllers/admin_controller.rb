@@ -33,7 +33,7 @@ class AdminController < ApplicationController
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]
       if @user.save
-        flash[:error]='成功'
+        flash.now[:succeed] = '成功'
         render :change_password
       end
     end
