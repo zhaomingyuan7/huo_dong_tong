@@ -58,4 +58,9 @@ class UsersController < ApplicationController
     cookies.delete(:token)
     redirect_to :login
   end
+
+  def forget_password_one
+  end
+  def post_password_one
+  end
 end
