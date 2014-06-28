@@ -83,7 +83,6 @@ class UsersController < ApplicationController
 
   def post_password_two
     @user = User.get_activity(session[:name])
-    session[:forget_password_question]=@user.forget_password_question
     redirect_to :login
   end
 
