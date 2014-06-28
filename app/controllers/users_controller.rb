@@ -61,6 +61,26 @@ class UsersController < ApplicationController
 
   def forget_password_one
   end
+
   def post_password_one
+    if params[:user][:name]==''
+      flash[:error]= '请输入用户名'
+      render :forget_password_one
+    else
+      user = User.get_activity(params[:user][:name])
+      if user
+        redirect_to :forget_password_two
+      else
+        flash[:error] = '用户名不存在'
+        render :forget_password_one
+      end
+    end
   end
+
+  def forget_password_two
+  end
+
+  def forget_password_three
+  end
+
 end
