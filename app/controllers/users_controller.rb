@@ -79,6 +79,8 @@ class UsersController < ApplicationController
   end
 
   def forget_password_two
+    @user = User.get_activity(session[:name])
+    @forget_password_question = @user[:forget_password_question]
   end
 
   def post_password_two
