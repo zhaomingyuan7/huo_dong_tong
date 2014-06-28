@@ -100,6 +100,7 @@ class UsersController < ApplicationController
   end
 
   def post_password_three
+    @user = User.get_activity(session[:name])
   end
 
 end
