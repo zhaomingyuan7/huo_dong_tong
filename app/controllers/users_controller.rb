@@ -68,6 +68,7 @@ class UsersController < ApplicationController
       render :forget_password_one
     else
       user = User.get_activity(params[:user][:name])
+      session[:name]= params[:user][:name]
       if user
         redirect_to :forget_password_two
       else
@@ -80,7 +81,16 @@ class UsersController < ApplicationController
   def forget_password_two
   end
 
+  def post_password_two
+    @user = User.get_activity(session[:name])
+    session[:forget_password_question]=@user.forget_password_question
+    redirect_to :login
+  end
+
   def forget_password_three
+  end
+
+  def post_password_three
   end
 
 end
