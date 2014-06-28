@@ -101,6 +101,21 @@ class UsersController < ApplicationController
 
   def post_password_three
     @user = User.get_activity(session[:name])
+    if params[:user][:password] == '' || params[:user][:password_confirmation] == ''
+      flash[:error] = '密码不能为空'
+      render :forget_password_three
+    else
+      if params[:user][:password]!= params[:user][:password_confirmation]
+        flash[:error]='两次密码输入不一致，请重新输入'
+        render :forget_password_three
+      else
+        @user.password = params[:user][:password]
+        @user.password_confirmation = params[:user][:password_confirmation]
+        if @user.save
+          cookies.permanent[:token] = @user.token
+          render :welcome_user
+        end
+      end
+    end
   end
-
 end
