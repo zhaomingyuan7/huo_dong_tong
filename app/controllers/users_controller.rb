@@ -83,7 +83,17 @@ class UsersController < ApplicationController
 
   def post_password_two
     @user = User.get_activity(session[:name])
-    redirect_to :login
+    if params[:@user][:question_answer] == ''
+      flash[:error] = '答案不能为空'
+      render :forget_password_two
+    else
+      if @user.question_answer == params[:@user][:question_answer]
+        redirect_to :forget_password_three
+      else
+        flash[:error] = '忘记密码答案错误'
+        render :forget_password_two
+      end
+    end
   end
 
   def forget_password_three
