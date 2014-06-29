@@ -2,6 +2,8 @@
 class UsersController < ApplicationController
 
   def login
+    session[:name] = nil
+    session[:two_step] = nil
   end
 
   def welcome
@@ -68,8 +70,8 @@ class UsersController < ApplicationController
       render :forget_password_one
     else
       user = User.get_activity(params[:user][:name])
-      session[:name]= params[:user][:name]
       if user
+        session[:name]= params[:user][:name]
         redirect_to :forget_password_two
       else
         flash[:error] = '用户名不存在'
@@ -79,8 +81,12 @@ class UsersController < ApplicationController
   end
 
   def forget_password_two
-    @user = User.get_activity(session[:name])
-    @forget_password_question = @user[:forget_password_question]
+    if session[:name]
+      @user = User.get_activity(session[:name])
+      @forget_password_question = @user[:forget_password_question]
+    else
+      redirect_to :forget_password_one
+    end
   end
 
   def post_password_two
@@ -90,6 +96,7 @@ class UsersController < ApplicationController
       render :forget_password_two
     else
       if @user.question_answer == params[:@user][:question_answer]
+        session[:two_step]= 'step'
         redirect_to :forget_password_three
       else
         flash[:error] = '忘记密码答案错误'
@@ -99,6 +106,11 @@ class UsersController < ApplicationController
   end
 
   def forget_password_three
+    if !session[:name] && !session[:two_step]
+      redirect_to :login
+    elsif session[:name] && !session[:two_step]
+      redirect_to :forget_password_two
+    end
   end
 
   def post_password_three
