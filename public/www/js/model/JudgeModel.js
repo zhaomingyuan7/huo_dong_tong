@@ -3,8 +3,9 @@ function Judge(){
 }
 
 Judge.exist_activities = function(){
-    var activities = JSON.parse(localStorage.getItem('activities')) || [];
-    return activities.length == 0;
+//    var activities = JSON.parse(localStorage.getItem('activities')) || [];
+    return Activity.get_activity().length == 0;
+    //添加user
 }
 
 Judge.exist_current_bidding = function(){
@@ -40,15 +41,15 @@ Judge.button_is_start = function(){
 }
 
 Judge.bid_list_end_condition = function(){
-    var bid_lists = JSON.parse(localStorage.getItem('bid_lists')) || [];
-    return _.find(bid_lists,function(bid_lists ){
+//    var bid_lists = JSON.parse(localStorage.getItem('bid_lists')) || [];
+    return _.find(Bid.bid_lists(),function(bid_lists ){//添加user
         return bid_lists.status == 'end'&&localStorage.current_bid_name == bid_lists.name&&bid_lists.activity == localStorage.activities_sign
     } )
 }
 
 Judge.bid_list_end_condition_two = function(){
-    var bid_lists = JSON.parse(localStorage.getItem('bid_lists')) || [];
-    return _.find(bid_lists,function(bid_lists ){
+//    var bid_lists = JSON.parse(localStorage.getItem('bid_lists')) || [];
+    return _.find(Bid.bid_lists(),function(bid_lists ){//添加user
         return bid_lists.status == "end"&&bid_lists.name == localStorage.current_bid_name&&bid_lists.activity==localStorage.activities_sign
     } )
 }

@@ -7,7 +7,11 @@ Sms.sign_up_name = function(json_message){
 }
 
 Sms.get_messages = function(){
-    return JSON.parse(localStorage.getItem('messages')) || [];
+    var user_message = JSON.parse(localStorage.getItem('messages')) || [];
+    return _.filter(user_message, function(message){
+        return message.user == localStorage.current_user
+    })//添加user
+//    return JSON.parse(localStorage.getItem('messages')) || [];
 }
 
 Sms.sign_up_phone = function(json_message){
@@ -28,7 +32,7 @@ Sms.activities_name_with_activities_sign = function(){
 Sms.save_activity_message = function(json_message){
     var messages = JSON.parse(localStorage.getItem('messages')) || [];
     var message = {};
-    message = {name: Sms.sign_up_name(json_message), phone: Sms.sign_up_phone(json_message), activity: localStorage.signing_up};
+    message = {user: localStorage.current_user, name: Sms.sign_up_name(json_message), phone: Sms.sign_up_phone(json_message), activity: localStorage.signing_up};//添加user
     messages.unshift(message);
 
     localStorage.setItem("messages", JSON.stringify(messages));
@@ -73,8 +77,7 @@ Sms.is_sign_activity_phone = function(json_message){
 
 
 Sms.is_repeat_bid = function(json_message){
-    var bid_messages = JSON.parse(localStorage.getItem('bid_messages')) || [];
-    return _.find(bid_messages,function(bid_messages){
+    return _.find(Sms.get_bid_messages(),function(bid_messages){//添加user
        return bid_messages.activity == localStorage.activities_sign && bid_messages.bid == localStorage.current_bidding && bid_messages.phone == Sms.bid_message_phone(json_message)
     })
 }
@@ -82,6 +85,7 @@ Sms.is_repeat_bid = function(json_message){
 Sms.save_bid_message = function(json_message){
     var bid_messages = JSON.parse(localStorage.getItem('bid_messages')) || [];
     var bid_message = {};
+    bid_message.user = localStorage.current_user;
     bid_message.phone = Sms.bid_message_phone(json_message);
     bid_message.price = Sms.bid_message_price(json_message);
     bid_message.activity = localStorage.activities_sign;
@@ -89,6 +93,13 @@ Sms.save_bid_message = function(json_message){
     bid_message.name = Sms.is_sign_activity_phone(json_message).name;
     bid_messages.push(bid_message);
     localStorage.setItem("bid_messages", JSON.stringify(bid_messages));
+}
+
+Sms.get_bid_messages = function(){//添加user
+    var bid_messages = JSON.parse(localStorage.getItem('bid_messages')) || [];
+    return _.filter(bid_messages,function(bid_message){
+        return bid_message.user == localStorage.current_user
+    })
 }
 
 Sms.no_bidding_and_signing = function(){
@@ -110,9 +121,8 @@ Sms.sign_this_activity = function(json_message){
 }
 
 Sms.bid_no_start = function(){
-    var bid_lists = JSON.parse(localStorage.getItem('bid_lists')) || [];
-    return _.find(bid_lists,function(bid_lists){
+//    var bid_lists = JSON.parse(localStorage.getItem('bid_lists')) || [];
+    return _.find(Bid.bid_lists(),function(bid_lists){//添加user
         return bid_lists.status == 'un_start' && bid_lists.activity == localStorage.activities_sign && bid_lists.name == localStorage.current_bid_name
     })
 }
-

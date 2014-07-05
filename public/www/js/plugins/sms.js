@@ -13,7 +13,6 @@ var native_accessor = {
     },
 
     process_received_message: function (json_message) {
-
         save_signing_up_message();
 
         function save_signing_up_message() {

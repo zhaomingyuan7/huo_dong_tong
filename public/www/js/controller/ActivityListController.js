@@ -2,13 +2,19 @@ function ActivityListController($scope, $navigate) {
 
     $scope.go_create = function () {
         $navigate.go('/create')
-    };
+    }
 
     if(!Judge.exist_current_bidding()){
         $scope.creat_is_disabled = true;
     }
 
-    $scope.activities = JSON.parse(localStorage.getItem('activities'));
+    var activities = JSON.parse(localStorage.getItem('activities'));
+
+    var user_activities = _.filter(activities,function(activity){
+        return activity.user == localStorage.current_user
+    })//活动列表显示添加user
+
+    $scope.activities = user_activities;
 
     $scope.activity_go_to_sign_up = function (activity) {
         Activity.save_current_activity_name(activity)
