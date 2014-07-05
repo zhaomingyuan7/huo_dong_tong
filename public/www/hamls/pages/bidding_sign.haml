@@ -1,0 +1,16 @@
+#refresh_bidding_sign.ng-scope
+%header
+  竞价{{bid}}({{number}}人)
+  .header-left
+    %a.btn-style.btn-4(ng-tap='go_bid_list()')返回
+  .header-right(ng-switch = 'start_end')
+    %button.btn-4(ng-tap = 'start_bidding()' ng-switch-when = 'start' )开始
+    %button.btn-4(ng-tap = 'end_bidding()' ng-switch-when = 'end' )结束
+    %button.btn.btn-4( ng-switch-when = 'disabled' ng-disabled = "ss")开始
+.wrapper.wrapper
+  %ul.list-style-2
+    %li( ng-repeat = "current_bid_messages in current_bid_messages" class="current_bid_messages.name,current_bid_messages.phone" )
+      %div
+        {{current_bid_messages.name}}
+      %div
+        {{current_bid_messages.phone}}

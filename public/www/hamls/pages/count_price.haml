@@ -1,0 +1,16 @@
+%header
+  价格统计  竞价{{bid}}({{number}}人)
+  .header-left
+    %button.btn-4(ng-tap = 'price_go_bid_list()' )返回
+  .header-right
+    %button.btn-4(ng-tap = 'price_go_bid_result()' )列表
+.wrapper.wrapper.scrollable
+  %ul(class="list-style-2")
+    %li( ng-repeat ="price_list in price_lists" class='price_list.price,price_list.count')
+      %h4
+        .header-left
+          ￥{{price_list.price}}
+        .header-right
+          {{price_list.count}}人
+%footer
+  {{bid_result}}{{consult_name}} {{consult_phone}} {{bid_dollar}}{{consult_price}}{{bid_success}}

@@ -1,9 +1,20 @@
 #encoding: utf-8
 class UsersController < ApplicationController
-
+  skip_before_filter :verify_authenticity_token , :only => [:process_phone_login]
   def login
     session[:name] = nil
     session[:two_step] = nil
+  end
+
+  def process_phone_login
+    user = User.get_activity(params[:userName])
+    respond_to do |format|
+      if user && user.authenticate(params[:userPwd])
+        format.json {render json: {data:'true'}}
+      else
+          format.json {render json: {data:'false'}}
+        end
+      end
   end
 
   def welcome
@@ -12,7 +23,6 @@ class UsersController < ApplicationController
     else
       @users=User.all
       @users = User.paginate(page: params[:page],per_page:10).where(:admin => false)
-
     end
   end
 
@@ -51,7 +61,7 @@ class UsersController < ApplicationController
         redirect_to :welcome_user
       end
     else
-      flash[:error]='用户名不存在或密码错误'
+      flash.now[:error]='用户名不存在或密码错误'
       render :login
     end
   end
@@ -66,7 +76,7 @@ class UsersController < ApplicationController
 
   def post_password_one
     if params[:user][:name]==''
-      flash[:error]= '请输入用户名'
+      flash.keep[:error]= '请输入用户名'
       render :forget_password_one
     else
       user = User.get_activity(params[:user][:name])
@@ -74,7 +84,7 @@ class UsersController < ApplicationController
         session[:name]= params[:user][:name]
         redirect_to :forget_password_two
       else
-        flash[:error] = '用户名不存在'
+        flash.now[:error] = '用户名不存在'
         render :forget_password_one
       end
     end
@@ -83,7 +93,8 @@ class UsersController < ApplicationController
   def forget_password_two
     if session[:name]
       @user = User.get_activity(session[:name])
-      @forget_password_question = @user[:forget_password_question]
+      #@forget_password_question = @user[:forget_password_question]
+      session[:forget_password_question] = @user[:forget_password_question]
     else
       redirect_to :forget_password_one
     end
@@ -92,14 +103,14 @@ class UsersController < ApplicationController
   def post_password_two
     @user = User.get_activity(session[:name])
     if params[:@user][:question_answer] == ''
-      flash[:error] = '答案不能为空'
+      flash.now[:error] = '答案不能为空'
       render :forget_password_two
     else
       if @user.question_answer == params[:@user][:question_answer]
         session[:two_step]= 'step'
         redirect_to :forget_password_three
       else
-        flash[:error] = '忘记密码答案错误'
+        flash.now[:error] = '忘记密码答案错误'
         render :forget_password_two
       end
     end
@@ -116,11 +127,11 @@ class UsersController < ApplicationController
   def post_password_three
     @user = User.get_activity(session[:name])
     if params[:user][:password] == '' || params[:user][:password_confirmation] == ''
-      flash[:error] = '密码不能为空'
+      flash.now[:error] = '密码不能为空'
       render :forget_password_three
     else
       if params[:user][:password]!= params[:user][:password_confirmation]
-        flash[:error]='两次密码输入不一致，请重新输入'
+        flash.now[:error]='两次密码输入不一致，请重新输入'
         render :forget_password_three
       else
         @user.password = params[:user][:password]

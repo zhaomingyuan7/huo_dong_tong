@@ -1,0 +1,43 @@
+%header
+  竞价结果   竞价{{bid}}({{number}}人)
+  .header-left
+    %a.btn-style.btn-4(ng-tap = 'go_bid_list()')返回
+  .header-right
+    %button.btn-4(ng-tap = 'go_count_price()' )统计
+.modal.fade#ModalSuccess
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close(aria-hidden = "true"  data-dismiss = "modal" type = "button") &times;
+        %h4.modal-title
+      .modal-body
+        %center
+          {{consult_name_modal}}￥{{consult_price_modal}}
+        %br
+        %center
+          {{consult_phone_modal}}
+        %br
+        %center
+          竞价成功！
+.modal.fade#ModalFalse
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close(aria-hidden = "true"  data-dismiss = "modal" type = "button") &times;
+        %h4.modal-title
+      .modal-body
+        %center
+          竞价失败！
+.wrapper.wrapper
+  %ul.list-style-2
+    %li( ng-repeat = "consult_list in consult_lists" class="consult_list.name,consult_list.phone,consult_list.price" )
+      %div
+        {{consult_list.name}}
+      %div
+        {{consult_list.phone}}
+      %div
+        .header-right
+          ￥{{consult_list.price}}
+%footer
+  {{bid_result}}{{consult_name}} {{consult_phone}} {{bid_dollar}}{{consult_price}}{{bid_success}}
+

@@ -1,0 +1,8 @@
+%header
+  创建活动
+  .header-left
+    %a.btn-style.btn-4(ng-tap='go_activity()' ng-show='list_is_null')返回
+  %h3( style="color:blue" align='left')活动名称
+  %input.input-full(ng-model="input_name")
+    %p.text-center(ng-show="showing_the_same_name")活动名称重复
+    %button.btn.btn-primary( ng-disabled = '!input_name' ng-tap='go_sign()')创建

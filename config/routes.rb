@@ -13,11 +13,13 @@ Rails.application.routes.draw do
   get '/change_password' => 'admin#change_password', :as => 'change_password'
   post 'post_password' => 'admin#post_password'
   get '/forget_password_one' => 'users#forget_password_one'
-  post 'post_password_one' => 'users#post_password_one'
+  post 'forget_password_one' => 'users#post_password_one'
   get '/forget_password_two' => 'users#forget_password_two'
   post 'post_password_two' => 'users#post_password_two'
   get '/forget_password_three' => 'users#forget_password_three'
   post 'post_password_three' => 'users#post_password_three'
+  post '/phone_login'=>'users#process_phone_login'
+  get '/phone_login'=>'users#phone_login'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

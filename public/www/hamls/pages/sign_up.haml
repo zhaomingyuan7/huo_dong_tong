@@ -1,0 +1,22 @@
+#refresh_sign_up.ng-scope
+%header
+  活动报名({{number}})
+  .header-left
+    %a.btn-style.btn-4(ng-tap='go_activity()')返回
+  .header-right(ng-switch='start_end')
+    %button.btn.btn-4( ng-switch-when='start_disabled' ng-disabled ='start_if_disabled')开始
+    %button.btn-4(ng-tap='start_sign_up()' ng-switch-when='start' )开始
+    %button.btn-4(ng-tap='end_sign_up()' ng-switch-when='end' )结束
+.wrapper.wrapper.scrollable
+  %ul(class="list-style-2")
+    %li( ng-repeat ="current_messages in current_messages" class='current_messages.name,current_messages.phone')
+      .header-left
+        {{current_messages.name}}
+      .header-right
+        {{current_messages.phone}}
+%footer
+  %ul.footer-nav.footer-nav-2tabs
+    %li.active
+      %a.btn-style.btn-4(ng-tap='go_sign_up()')报名
+    %li
+      %a.btn-style.btn-4(ng-tap='go_bid_list()')竞价
