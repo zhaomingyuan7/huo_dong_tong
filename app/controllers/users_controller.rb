@@ -1,9 +1,23 @@
 #encoding: utf-8
 class UsersController < ApplicationController
-  skip_before_filter :verify_authenticity_token , :only => [:process_phone_login]
+  skip_before_filter :verify_authenticity_token , :only => [:process_phone_login, :deal_with_upload_data]
   def login
     session[:name] = nil
     session[:two_step] = nil
+  end
+
+  def deal_with_upload_data
+
+    Activity.update_activities(params[:user_name],params[:activities])
+    BidList.update_bid_lists(params[:user_name],params[:bid_lists])
+    BidMessage.update_bid_messages(params[:user_name],params[:bid_messages])
+    Message.update_messages(params[:user_name],params[:messages])
+    p '-------------------'
+    respond_to do |format|
+      p '-=============------------------'
+      format.json {render json: {data:'true'}}
+  end
+
   end
 
   def process_phone_login

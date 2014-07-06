@@ -18,8 +18,9 @@ Rails.application.routes.draw do
   post 'post_password_two' => 'users#post_password_two'
   get '/forget_password_three' => 'users#forget_password_three'
   post 'post_password_three' => 'users#post_password_three'
-  post '/phone_login'=>'users#process_phone_login'
-  get '/phone_login'=>'users#phone_login'
+  post '/phone_login' => 'users#process_phone_login'
+  post '/deal_with_upload_data' => 'users#deal_with_upload_data'
+  #get '/phone_login'=>'users#phone_login'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
