@@ -10,4 +10,9 @@ class Message < ActiveRecord::Base
     end
   end
 
+  def self.get_message(user_name,activity)
+    Message.where(:user => user_name, :activity => activity)
+  end
+
+
 end

@@ -10,4 +10,7 @@ class BidMessage < ActiveRecord::Base
     end
   end
 
+  def self.get_bid_message_number(user_name,activity,bid)
+    BidMessage.where(:user => user_name, :activity => activity, :bid => bid)
+  end
 end

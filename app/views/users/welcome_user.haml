@@ -1,7 +1,30 @@
 .container(style="margin:10px 50px" )
-  %h1 活动通
-  .body-right-3
+  .navbar-nav.navbar-right
     你好,
     -if current_user
       =current_user.name
       =link_to '退出',logout_path,method: 'delete'
+  %h1 活动通
+.user-box
+  %table.table
+    %thead
+      %h3
+        活动信息
+    %thead
+      %td(align="center" style="width:20%") 编号
+      %td(align="center" style="width:20%") 活动名称
+      %td(align="center" style="width:20%") 报名人数
+      %td(align="center" style="width:20%") 竞价次数
+    %tbody
+      -@activities.each do|activity|
+        %tr
+          %td(align="center" style="width:20%")
+            =@count+=1
+          %td(align="center" style="width:20%")
+            =link_to activity.name,bid_list_path(:activity_name => activity[:name])
+          %td(align="center" style="width:20%")
+            =link_to Message.get_message(activity.user, activity.name).length,sign_up_path(:activity_name => activity[:name], :user_name => current_user.name)
+          %td(align="center" style="width:20%")
+            =link_to BidList.get_bid_list(activity.user,activity.name).length,bid_list_path(:activity_name => activity[:name])
+  .right-padding(align="right")
+    = will_paginate @activities, :previous_label=> '<<', :next_label=> '>>'

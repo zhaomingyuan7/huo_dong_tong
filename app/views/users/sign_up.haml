@@ -1,0 +1,36 @@
+.container(style="margin:10px 50px" )
+  .navbar-nav.navbar-right
+    你好,
+    -if current_user
+      =current_user.name
+      =link_to '退出',logout_path,method: 'delete'
+  %h1 活动通
+.body
+  %ol.breadcrumb
+    %li
+      =link_to '首页',welcome_user_path
+      %li.active 报名列表
+.row(style="width:1320px" )
+.user-box
+  %table.table
+    %thead
+      %h4
+        报名列表
+        %div(style="float:right" )
+          %h5
+            =link_to '竞价列表',bid_list_path(:activity_name => @activity_name)
+    %thead
+      %td(align="center" style="width:37%") 编号
+      %td(align="center" style="width:37%")姓名
+      %td(align="center" style="width:37%") 手机号
+    %tbody
+      -@messages.each do|message|
+        %tr
+          %td(align="center" style="width:25%")
+            =@count+=1
+          %td(align="center" style="width:25%")
+            =link_to message.name,bid_list_path
+          %td(align="center" style="width:25%")
+            =link_to message.phone,sign_up_path
+  .right-padding(align="right")
+    = will_paginate @messages, :previous_label=> '<<', :next_label=> '>>'

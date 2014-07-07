@@ -12,12 +12,9 @@ class UsersController < ApplicationController
     BidList.update_bid_lists(params[:user_name],params[:bid_lists])
     BidMessage.update_bid_messages(params[:user_name],params[:bid_messages])
     Message.update_messages(params[:user_name],params[:messages])
-    p '-------------------'
     respond_to do |format|
-      p '-=============------------------'
       format.json {render json: {data:'true'}}
-  end
-
+    end
   end
 
   def process_phone_login
@@ -41,6 +38,31 @@ class UsersController < ApplicationController
   end
 
   def welcome_user
+    if !current_user
+      redirect_to :login
+    else
+      @count = 0
+      @activities = Activity.get_user_activities(current_user.name).paginate(page: params[:page],per_page:10)
+
+    end
+  end
+
+  def bid_list
+    @count = 0
+    @bid_lists = BidList.get_bid_list(current_user.name,params[:activity_name]).paginate(page: params[:page],per_page:10)
+    @activity_name = params[:activity_name]
+    p '======================'
+    p @activity_name
+    p '======================'
+  end
+
+  def sign_up
+    @count = 0
+    @messages = Message.get_message(params[:user_name],params[:activity_name]).paginate(page: params[:page],per_page:10)
+    @activity_name = params[:activity_name]
+    p '-------------------------'
+    p params[:activity_name]
+    p '-------------------------'
   end
 
   def register

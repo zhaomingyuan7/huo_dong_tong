@@ -10,4 +10,9 @@ class BidList < ActiveRecord::Base
     end
   end
 
+  def self.get_bid_list(user_name,activity)
+    #BidList.reverse
+    BidList.where(:user => user_name, :activity => activity)
+  end
+
 end

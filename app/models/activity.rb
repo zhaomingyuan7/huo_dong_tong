@@ -10,4 +10,8 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def self.get_user_activities(user_name)
+    Activity.where(:user => user_name)
+  end
+
 end
