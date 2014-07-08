@@ -35,6 +35,8 @@ function BidResultController($scope, $navigate, $timeout) {
         $scope.bid_success = '竞价成功';
     }
 
+    Bid.result_data();
+
     if (Bid.count_price_first_information()) {
         $scope.consult_price_modal = Bid.count_price_first_information().price;
 

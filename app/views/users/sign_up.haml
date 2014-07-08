@@ -29,8 +29,8 @@
           %td(align="center" style="width:25%")
             =@count+=1
           %td(align="center" style="width:25%")
-            =link_to message.name,bid_list_path
+            =message.name
           %td(align="center" style="width:25%")
-            =link_to message.phone,sign_up_path
+            =message.phone
   .right-padding(align="right")
     = will_paginate @messages, :previous_label=> '<<', :next_label=> '>>'

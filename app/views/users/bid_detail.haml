@@ -1,0 +1,55 @@
+.container(style="margin:10px 50px" )
+  .navbar-nav.navbar-right
+    你好,
+    -if current_user
+      =current_user.name
+      =link_to '退出',logout_path,method: 'delete'
+  %h2 活动通
+.body
+  %ol.breadcrumb
+    %li
+      =link_to '首页',welcome_user_path
+    %li
+      =link_to '竞价列表' ,bid_list_path(:activity_name => params[:activity_name])
+    %li
+      第
+      =@current_bid
+      次竞价
+  %ol.breadcrumb
+    .winner(align = 'center')
+      %p
+        获胜者：
+        =@successful_name
+      %p
+        出价：
+        =@successful_price
+        元
+      %p
+        手机号：
+        =@successful_phone
+.bid-detail-box
+  %table.table
+    %thead
+      %ul.nav.nav-tabs.nav-justified
+        %li.active
+          %a
+            出价列表
+        %li
+          =link_to '价格统计' ,price_count_path(:activity_name => params[:activity_name], :bid_name => @current_bid)
+      %td(align="center" style="width:20%") 编号
+      %td(align="center" style="width:20%")姓名
+      %td(align="center" style="width:20%") 价格/元
+      %td(align="center" style="width:20%") 手机号
+    %tbody
+      -@bid_messages.each do|bid_message|
+        %tr
+          %td(align="center" style="width:20%")
+            =@count+=1
+          %td(align="center" style="width:20%")
+            =bid_message.name
+          %td(align="center" style="width:20%")
+            =bid_message.price
+          %td(align="center" style="width:20%")
+            =bid_message.phone
+  .right-padding(align="right")
+    = will_paginate @bid_messages, :previous_label=> '<<', :next_label=> '>>'

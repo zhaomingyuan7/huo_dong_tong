@@ -27,7 +27,7 @@ Bid.judge_bid_list_start_button = function(){
             return true;
         }
     })
-}
+}s
 
 Bid.save_current_bid_name = function(name){
     localStorage.current_bid_name = name;
@@ -132,4 +132,15 @@ Bid.count_price_first_information = function(){
         function (current_count_price) {
             return current_count_price.price == Bid.count_price_one().price
         })
+}
+
+Bid.result_data = function(){
+    console.log(Bid.price_and_num()[0].price,'=====================')
+    var bid_results = JSON.parse(localStorage.getItem('bid_results')) || [];
+    var bid_result = {}
+    bid_result.price = Bid.price_and_num().price;
+    bid_result.count = Bid.price_and_num().count;
+    bid_results.push(bid_result);
+    localStorage.setItem('bid_results', JSON.stringify(bid_results));
+    console.log(bid_results,'bid_results')
 }

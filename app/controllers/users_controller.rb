@@ -43,7 +43,6 @@ class UsersController < ApplicationController
     else
       @count = 0
       @activities = Activity.get_user_activities(current_user.name).paginate(page: params[:page],per_page:10)
-
     end
   end
 
@@ -51,18 +50,51 @@ class UsersController < ApplicationController
     @count = 0
     @bid_lists = BidList.get_bid_list(current_user.name,params[:activity_name]).paginate(page: params[:page],per_page:10)
     @activity_name = params[:activity_name]
-    p '======================'
-    p @activity_name
-    p '======================'
   end
 
   def sign_up
     @count = 0
     @messages = Message.get_message(params[:user_name],params[:activity_name]).paginate(page: params[:page],per_page:10)
     @activity_name = params[:activity_name]
-    p '-------------------------'
     p params[:activity_name]
-    p '-------------------------'
+  end
+
+  def bid_detail
+    @count = 0
+    @bid_messages = BidMessage.get_current_bid_message(current_user.name,params[:activity_name],params[:bid_name]).paginate(page: params[:page],per_page:10)
+    @current_bid = params[:bid_name]
+
+    @current_bid_messages = @bid_messages.group_by{|s| s.price}
+    @current_prices = @current_bid_messages.keys
+    @prices = @current_prices.sort
+    @prices.each do |price|
+      if BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,price).length == 1
+        @successful_price = price
+        break
+      else
+        alert('竞价失败')
+      end
+    end
+    @successful_name = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].name
+    @successful_phone = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].phone
+  end
+
+  def price_count
+    @bid_messages = BidMessage.get_current_bid_message(current_user.name,params[:activity_name],params[:bid_name]).paginate(page: params[:page],per_page:10)
+    @current_bid = params[:bid_name]
+    @current_bid_messages = @bid_messages.group_by{|s| s.price}
+    @current_prices = @current_bid_messages.keys
+    @prices = @current_prices.sort
+    @prices.each do |price|
+      if BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,price).length == 1
+        @successful_price = price
+        break
+      else
+        alert('竞价失败')
+      end
+    end
+    @successful_name = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].name
+    @successful_phone = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].phone
   end
 
   def register
