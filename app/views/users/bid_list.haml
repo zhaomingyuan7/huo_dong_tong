@@ -34,5 +34,5 @@
             =BidMessage.get_bid_message_number(current_user.name,bid_list.activity,bid_list.name).length
             \/
             =Message.get_message(bid_list.user, bid_list.activity).length
-  .right-padding(align="right")
-    = will_paginate @bid_lists, :previous_label=> '<<', :next_label=> '>>'
+  -#.right-padding(align="right")
+  -#  = will_paginate @bid_lists, :previous_label=> '<<', :next_label=> '>>'

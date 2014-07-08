@@ -27,7 +27,7 @@ Bid.judge_bid_list_start_button = function(){
             return true;
         }
     })
-}s
+}
 
 Bid.save_current_bid_name = function(name){
     localStorage.current_bid_name = name;

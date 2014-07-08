@@ -17,16 +17,21 @@
       次竞价
   %ol.breadcrumb
     .winner(align = 'center')
-      %p
-        获胜者：
-        =@successful_name
-      %p
-        出价：
-        =@successful_price
-        元
-      %p
-        手机号：
-        =@successful_phone
+      -if flash.now[:bidding]
+        活动正在进行中...
+      -if flash.now[:success]
+        %p
+          获胜者：
+          =@successful_name
+        %p
+          出价：
+          =@successful_price
+          元
+        %p
+          手机号：
+          =@successful_phone
+      -if flash.now[:fail]
+        本次竞价无人胜出
 .bid-detail-box
   %table.table
     %thead

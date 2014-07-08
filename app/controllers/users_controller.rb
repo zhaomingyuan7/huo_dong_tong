@@ -48,8 +48,9 @@ class UsersController < ApplicationController
 
   def bid_list
     @count = 0
-    @bid_lists = BidList.get_bid_list(current_user.name,params[:activity_name]).paginate(page: params[:page],per_page:10)
+    @current_bid_lists = BidList.get_bid_list(current_user.name,params[:activity_name]).paginate(page: params[:page],per_page:10)
     @activity_name = params[:activity_name]
+    @bid_lists = @current_bid_lists.sort_by{|x| x.name}
   end
 
   def sign_up
@@ -67,16 +68,23 @@ class UsersController < ApplicationController
     @current_bid_messages = @bid_messages.group_by{|s| s.price}
     @current_prices = @current_bid_messages.keys
     @prices = @current_prices.sort
+
+    current_bid_information = BidList.get_every_bid_information(current_user.name,params[:activity_name],params[:bid_name])
+    if current_bid_information[0].status == 'start'
+      flash.now[:bidding] = 'true'
+      return
+    end
     @prices.each do |price|
       if BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,price).length == 1
         @successful_price = price
+        flash.now[:success] = 'true'
+        @successful_name = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].name
+        @successful_phone = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].phone
         break
       else
-        alert('竞价失败')
+        flash.now[:fail] = 'true'
       end
     end
-    @successful_name = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].name
-    @successful_phone = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].phone
   end
 
   def price_count
@@ -88,13 +96,14 @@ class UsersController < ApplicationController
     @prices.each do |price|
       if BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,price).length == 1
         @successful_price = price
+        flash.now[:success] = 'true'
+        @successful_name = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].name
+        @successful_phone = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].phone
         break
       else
-        alert('竞价失败')
+        flash.now[:fail] = 'true'
       end
     end
-    @successful_name = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].name
-    @successful_phone = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].phone
   end
 
   def register

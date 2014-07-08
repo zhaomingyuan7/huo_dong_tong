@@ -15,4 +15,8 @@ class BidList < ActiveRecord::Base
     BidList.where(:user => user_name, :activity => activity)
   end
 
+  def self.get_every_bid_information(user_name,activity,bid)
+    BidList.where(:user => user_name, :activity => activity, :name => bid)
+  end
+
 end
