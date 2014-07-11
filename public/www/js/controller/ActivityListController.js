@@ -33,23 +33,7 @@ function ActivityListController($scope, $navigate,$http) {
     }
 
     $scope.upload_data = function(){
-        console.log(Activity.get_activity())
-        $http.post('/deal_with_upload_data', {
-            "user_name":localStorage.current_user,
-            "messages":Sms.get_messages(),
-            "bid_messages":Sms.get_bid_messages(),
-            "bid_lists":Bid.bid_lists(),
-            "activities":Activity.get_activity()
-        })
-            .success(function(back) {
-//                console.log("test",back)
-                if (back.data == 'true') {
-                    alert('同步成功')
-                }
-                else{
-                    alert('同步失败，请重新同步')
-                }
-            });
-
+        Activity.upload_data($http)
     }
+
 }

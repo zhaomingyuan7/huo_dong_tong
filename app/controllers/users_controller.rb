@@ -1,17 +1,86 @@
 #encoding: utf-8
 class UsersController < ApplicationController
-  skip_before_filter :verify_authenticity_token , :only => [:process_phone_login, :deal_with_upload_data]
+  skip_before_filter :verify_authenticity_token , :only => [:only_update_bid_list,:end_bidding, :synchronous_show, :process_phone_login, :deal_with_upload_data, :synchronous_bid_message]
   def login
     session[:name] = nil
     session[:two_step] = nil
+    session[:current_user] = nil
+    session[:bid_end] = nil
   end
 
   def deal_with_upload_data
-
     Activity.update_activities(params[:user_name],params[:activities])
     BidList.update_bid_lists(params[:user_name],params[:bid_lists])
     BidMessage.update_bid_messages(params[:user_name],params[:bid_messages])
     Message.update_messages(params[:user_name],params[:messages])
+    respond_to do |format|
+      format.json {render json: {data:'true'}}
+    end
+  end
+
+  def only_update_bid_list
+    BidList.update_bid_lists(params[:user_name],params[:bid_lists])
+    respond_to do |format|
+      format.json {render json: {data:'true'}}
+    end
+  end
+
+  def synchronous_bid_message
+    BidMessage.create(params[:bid_messages])
+    respond_to do |format|
+      format.json {render json: {data:'true'}}
+    end
+  end
+
+
+  def synchronous_show
+
+    @winner = session[:winner]
+    @price = session[:price]
+    @phone = session[:phone]
+    @winner_name = session[:winner_name]
+    p '-------------------------------------------------------'
+    p params[:winner]
+    p @winner == 'winner'
+    p @winner == 'no_winner'
+    p session[:winner]
+    p session[:price]
+    p session[:phone]
+    p '-------------------------------------------------------'
+    if BidList.get_bidding_name(session[:current_user]) != []
+      @bid = BidList.get_bidding_name(session[:current_user])[0].name
+      @activity = BidList.get_bidding_name(session[:current_user])[0].activity
+      @bid_messages = BidMessage.get_current_bid_message(session[:current_user],@activity,@bid).paginate(page: params[:page],per_page:10)
+    end
+  end
+
+  def end_bidding
+    session[:winner] = nil
+    session[:price] = nil
+    session[:phone] = nil
+    session[:winner_name] = nil
+    p '======================================'
+    p session[:price]
+    p '======================================'
+    if params[:winner]
+      session[:winner] = params[:winner]
+      session[:price] =  params[:price]
+      session[:phone] = params[:phone]
+      session[:winner_name] = params[:name]
+      p '-------------------------------------------------------'
+      p params[:winner]
+      p session[:winner]
+      p session[:price]
+      p session[:phone]
+      p '-------------------------------------------------------'
+    else
+      session[:winner] = params[:no_winner]
+      p '+++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+      p params[:winner]
+      p session[:winner] == 'no_winner'
+      p session[:winner]
+      p '+++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+    end
     respond_to do |format|
       format.json {render json: {data:'true'}}
     end
@@ -29,6 +98,7 @@ class UsersController < ApplicationController
   end
 
   def welcome
+    session[:current_user] = nil
     if !current_user
       redirect_to :login
     else
@@ -38,48 +108,59 @@ class UsersController < ApplicationController
   end
 
   def welcome_user
+    session[:bid_end] = nil
     if !current_user
       redirect_to :login
     else
       @count = 0
-      @activities = Activity.get_user_activities(current_user.name).paginate(page: params[:page],per_page:10)
+      if current_user.admin
+        if !session[:current_user]
+          @activities = Activity.get_user_activities(params[:admin_get_user]).paginate(page: params[:page],per_page:10)
+          session[:current_user]=  params[:admin_get_user]
+        else
+          @activities = Activity.get_user_activities(session[:current_user]).paginate(page: params[:page],per_page:10)
+        end
+      else
+        @activities = Activity.get_user_activities(current_user.name).paginate(page: params[:page],per_page:10)
+        session[:current_user]=  current_user.name
+      end
     end
   end
 
   def bid_list
     @count = 0
-    @current_bid_lists = BidList.get_bid_list(current_user.name,params[:activity_name]).paginate(page: params[:page],per_page:10)
+    @current_bid_lists = BidList.get_bid_list(session[:current_user] ,params[:activity_name]).paginate(page: params[:page],per_page:10)
     @activity_name = params[:activity_name]
     @bid_lists = @current_bid_lists.sort_by{|x| x.name}
   end
 
   def sign_up
     @count = 0
-    @messages = Message.get_message(params[:user_name],params[:activity_name]).paginate(page: params[:page],per_page:10)
+    @messages = Message.get_message(session[:current_user] ,params[:activity_name]).paginate(page: params[:page],per_page:10)
     @activity_name = params[:activity_name]
     p params[:activity_name]
   end
 
   def bid_detail
     @count = 0
-    @bid_messages = BidMessage.get_current_bid_message(current_user.name,params[:activity_name],params[:bid_name]).paginate(page: params[:page],per_page:10)
+    @bid_messages = BidMessage.get_current_bid_message(session[:current_user] ,params[:activity_name],params[:bid_name]).paginate(page: params[:page],per_page:10)
     @current_bid = params[:bid_name]
 
     @current_bid_messages = @bid_messages.group_by{|s| s.price}
     @current_prices = @current_bid_messages.keys
     @prices = @current_prices.sort
 
-    current_bid_information = BidList.get_every_bid_information(current_user.name,params[:activity_name],params[:bid_name])
+    current_bid_information = BidList.get_every_bid_information(session[:current_user] ,params[:activity_name],params[:bid_name])
     if current_bid_information[0].status == 'start'
       flash.now[:bidding] = 'true'
       return
     end
     @prices.each do |price|
-      if BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,price).length == 1
+      if BidMessage.get_price_number(session[:current_user] ,params[:activity_name],@current_bid,price).length == 1
         @successful_price = price
         flash.now[:success] = 'true'
-        @successful_name = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].name
-        @successful_phone = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].phone
+        @successful_name = BidMessage.get_price_number(session[:current_user] ,params[:activity_name],@current_bid,@successful_price)[0].name
+        @successful_phone = BidMessage.get_price_number(session[:current_user] ,params[:activity_name],@current_bid,@successful_price)[0].phone
         break
       else
         flash.now[:fail] = 'true'
@@ -88,17 +169,24 @@ class UsersController < ApplicationController
   end
 
   def price_count
-    @bid_messages = BidMessage.get_current_bid_message(current_user.name,params[:activity_name],params[:bid_name]).paginate(page: params[:page],per_page:10)
+    @bid_messages = BidMessage.get_current_bid_message(session[:current_user] ,params[:activity_name],params[:bid_name]).paginate(page: params[:page],per_page:10)
     @current_bid = params[:bid_name]
     @current_bid_messages = @bid_messages.group_by{|s| s.price}
     @current_prices = @current_bid_messages.keys
     @prices = @current_prices.sort
+
+    current_bid_information = BidList.get_every_bid_information(session[:current_user] ,params[:activity_name],params[:bid_name])
+    if current_bid_information[0].status == 'start'
+      flash.now[:bidding] = 'true'
+      return
+    end
+
     @prices.each do |price|
-      if BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,price).length == 1
+      if BidMessage.get_price_number(session[:current_user] ,params[:activity_name],@current_bid,price).length == 1
         @successful_price = price
         flash.now[:success] = 'true'
-        @successful_name = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].name
-        @successful_phone = BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,@successful_price)[0].phone
+        @successful_name = BidMessage.get_price_number(session[:current_user] ,params[:activity_name],@current_bid,@successful_price)[0].name
+        @successful_phone = BidMessage.get_price_number(session[:current_user] ,params[:activity_name],@current_bid,@successful_price)[0].phone
         break
       else
         flash.now[:fail] = 'true'
@@ -170,7 +258,6 @@ class UsersController < ApplicationController
   def forget_password_two
     if session[:name]
       @user = User.get_activity(session[:name])
-      #@forget_password_question = @user[:forget_password_question]
       session[:forget_password_question] = @user[:forget_password_question]
     else
       redirect_to :forget_password_one

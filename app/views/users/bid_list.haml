@@ -18,7 +18,7 @@
         竞价列表
         %div(style="float:right" )
           %h5
-            =link_to '报名列表',sign_up_path(:activity_name => @activity_name, :user_name => current_user.name)
+            =link_to '报名列表',sign_up_path(:activity_name => @activity_name, :current_user => @current_user)
     %thead
       %td(align="center" style="width:20%") 编号
       %td(align="center" style="width:20%")名称
@@ -31,7 +31,7 @@
           %td(align="center" style="width:20%")
             =link_to '第' + bid_list.name + '次竞价',bid_detail_path(:bid_name => bid_list.name, :activity_name => @activity_name)
           %td(align="center" style="width:20%")
-            =BidMessage.get_bid_message_number(current_user.name,bid_list.activity,bid_list.name).length
+            =BidMessage.get_bid_message_number(session[:current_user],bid_list.activity,bid_list.name).length
             \/
             =Message.get_message(bid_list.user, bid_list.activity).length
   -#.right-padding(align="right")

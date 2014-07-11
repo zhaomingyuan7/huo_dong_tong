@@ -1,4 +1,4 @@
-function BiddingListController($scope, $navigate) {
+function BiddingListController($scope, $navigate,$http) {
 
     $scope.go_activity_list = function () {
         $navigate.go('/')
@@ -37,4 +37,5 @@ function BiddingListController($scope, $navigate) {
             return "start";
         }
     }
+
 }

@@ -82,3 +82,26 @@ Activity.no_start_button = function(){
         return 'start'
     }
 }
+Activity.upload_data = function($http){
+    $http.post('/deal_with_upload_data', {
+        "user_name":localStorage.current_user,
+        "messages":Sms.get_messages(),
+        "bid_messages":Sms.get_bid_messages(),
+        "bid_lists":Bid.bid_lists(),
+        "activities":Activity.get_activity()
+    })
+        .success(function(){
+            alert('同步成功')
+        })
+//            .success(function(back) {
+//                if (back.data == 'true') {
+//                    alert('同步成功')
+//                }
+//                else{
+//                    alert('同步失败，请重新同步')
+//                }
+//            })
+        .error(function(){
+            alert('同步失败，请重新同步')
+        })
+}

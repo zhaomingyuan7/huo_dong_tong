@@ -1,4 +1,4 @@
-function CountPriceController($scope, $navigate) {
+function CountPriceController($scope, $navigate,$http) {
 
     $scope.price_go_bid_list = function () {
         $navigate.go('/bid_list')
@@ -34,4 +34,5 @@ function CountPriceController($scope, $navigate) {
     if(Bid.count_price_first_information()){
         bid_result_footer();
     }
+
 }

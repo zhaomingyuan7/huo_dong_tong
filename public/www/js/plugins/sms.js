@@ -84,6 +84,11 @@ var native_accessor = {
                                     return
                                 }
                                 Sms.save_bid_message(json_message);
+                                $.ajax({
+                                    url: '/synchronous_bid_message',
+                                    type: 'POST',
+                                    data: {"bid_messages":Sms.get_bid_messages()[Sms.get_bid_messages().length - 1]}
+                                });
                                 refresh_bid_page();
                                 native_accessor.send_sms(json_message.messages[0].phone, "恭喜！你已出价成功")
                                 return;
@@ -98,11 +103,11 @@ var native_accessor = {
                 }
             }
         }
-
         function refresh_bid_page() {
 
             var id_exist = document.getElementById('refresh_bidding_sign')
             if (id_exist) {
+
                 var scope = angular.element(id_exist).scope();
                 scope.$apply(function () {
                     scope.refresh_bid_messages();
@@ -121,3 +126,13 @@ function notify_message_received(message_json) {
     //phone_number=message_json.messages[0].phone;
 }
 
+//$http.post('/synchronous_bid_message', {
+//    "user_name":localStorage.current_user,
+//    "bid_messages":Sms.get_bid_messages()
+//})
+//    .success(function(){
+//        alert('同步成功')
+//    })
+//    .error(function(){
+//        alert('同步失败，请重新同步')
+//    })

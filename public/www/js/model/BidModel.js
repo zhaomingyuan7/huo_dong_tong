@@ -128,6 +128,9 @@ Bid.count_price_one = function(){
 }
 
 Bid.count_price_first_information = function(){
+   if (!Bid.count_price_one()){
+       return;
+   }
    return _.find(Bid.current_count_price(),
         function (current_count_price) {
             return current_count_price.price == Bid.count_price_one().price
@@ -135,12 +138,10 @@ Bid.count_price_first_information = function(){
 }
 
 Bid.result_data = function(){
-    console.log(Bid.price_and_num()[0].price,'=====================')
     var bid_results = JSON.parse(localStorage.getItem('bid_results')) || [];
     var bid_result = {}
     bid_result.price = Bid.price_and_num().price;
     bid_result.count = Bid.price_and_num().count;
     bid_results.push(bid_result);
     localStorage.setItem('bid_results', JSON.stringify(bid_results));
-    console.log(bid_results,'bid_results')
 }

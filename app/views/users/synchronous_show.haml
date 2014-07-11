@@ -1,0 +1,51 @@
+#bidding_messages
+  %body
+    - if BidList.get_bidding_name(session[:current_user]) != []
+      %ol.breadcrumb
+        .winner(align = 'center')
+          .h7
+            =BidList.get_bidding_name(session[:current_user])[0].activity
+          %h2
+            %p
+              参与人数：
+              =BidMessage.get_bid_message_number(session[:current_user],@activity,@bid).length
+              \/
+              =Message.get_message(session[:current_user],@activity).length
+        .panel.panel-default(style="margin-top: 50px;" )
+          %table.table
+            %thead
+              %tr
+                %th.text-center
+                  姓名
+                %th.text-center
+                  电话
+            %tbody
+              - @bid_messages.each do |bid_message|
+                %tr
+                  %th.text-center
+                    =bid_message.name
+                  %th.text-center
+                    =bid_message.phone[0,4] + '***' + bid_message.phone[7,11]
+          .right-padding(align="right")
+            = will_paginate @bid_messages, :previous_label=> '<<', :next_label=> '>>'
+    - else
+      %ol.breadcrumb
+        .winner(align = 'center')
+          %h1
+            比赛结果
+            - if @winner == 'winner'
+              %h2
+                获胜者
+                =@winner_name
+                %h2
+                  出价:
+                  =@price
+                  元
+                  %h2
+                    电话
+                    =@phone
+            -if @winner == 'no_winner'
+              %h2
+                竞价失败
+:javascript
+  setTimeout("$('#bidding_messages').load('synchronous_sho/#bidding_messages')",3000)

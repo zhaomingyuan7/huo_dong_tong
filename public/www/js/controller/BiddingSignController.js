@@ -1,4 +1,4 @@
-function BiddingSignController($scope, $navigate) {
+function BiddingSignController($scope, $navigate,$http) {
 
     $scope.go_bid_list = function () {
         $navigate.go('/bid_list');
@@ -28,12 +28,20 @@ function BiddingSignController($scope, $navigate) {
         Bid.save_bid_sign_status('start');
         $scope.start_end = 'end';
         Bid.save_current_bidding_name(Bid.save_bidding_name().name);
+        $http.post('/deal_with_upload_data', {
+            "user_name":localStorage.current_user,
+            "messages":Sms.get_messages(),
+            "bid_messages":Sms.get_bid_messages(),
+            "bid_lists":Bid.bid_lists(),
+            "activities":Activity.get_activity()
+        })
     }
 
 
     $scope.end_bidding = function () {
+
         end_confirm();
-        }
+    }
 
 
     $scope.ss = true;
@@ -49,6 +57,27 @@ function BiddingSignController($scope, $navigate) {
             $scope.start_end = "end";
             Bid.save_bid_sign_status('end');
             localStorage.setItem('current_bidding', '');
+            $http.post('/deal_with_upload_data', {
+                "user_name":localStorage.current_user,
+                "messages":Sms.get_messages(),
+                "bid_messages":Sms.get_bid_messages(),
+                "bid_lists":Bid.bid_lists(),
+                "activities":Activity.get_activity()
+            })
+            if(Bid.count_price_first_information()){
+                $.ajax({type: "POST",
+                    url: "/end_bidding",
+                    data: { "winner":"winner",
+                        "name":Bid.count_price_first_information().name,
+                        "phone":Bid.count_price_first_information().phone,
+                        "price":Bid.count_price_first_information().price
+                    }
+                })
+            }else{
+                $.ajax({type: "POST",
+                    url: "/end_bidding",
+                    data: {"no_winner":"no_winner"}})
+            }
             $navigate.go('/bid_result');
         }
     }
@@ -58,6 +87,7 @@ function BiddingSignController($scope, $navigate) {
 
 
     $scope.refresh_bid_messages = function (){
+
         $scope.current_bid_messages = Bid.creat_current_bid_message();
         $scope.number = Bid.count_bid_sign_number();
     }

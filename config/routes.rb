@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'login' => 'users#login'
   delete 'logout' => 'users#logout', :as => 'logout'
   resources :users,only: [:create]
-  get '/welcome_user' => 'users#welcome_user'
+  get '/welcome_user' => 'users#welcome_user', :as => 'welcome_user'
   get 'add_user' => 'admin#add_user',:as => 'add_user'
   get 'index_welcome' => 'users#welcome',:as => 'index_welcome'
   delete 'delete_user'=>'admin#delete_user' ,:as => 'delete_user'
@@ -24,6 +24,11 @@ Rails.application.routes.draw do
   get 'sign_up' => 'users#sign_up', :as => 'sign_up'
   get 'bid_detail' => 'users#bid_detail', :as => 'bid_detail'
   get 'price_count' => 'users#price_count', :as => 'price_count'
+  get 'synchronous_show' => 'users#synchronous_show', :as => 'synchronous_show'
+  post 'synchronous_show' => 'users#synchronous_show'
+  post 'synchronous_bid_message' => 'users#synchronous_bid_message'
+  post '/end_bidding'=>'users#end_bidding'
+  post 'only_update_bid_list' => 'users#only_update_bid_list'
   #get '/phone_login'=>'users#phone_login'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

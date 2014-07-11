@@ -1,4 +1,4 @@
-function BidResultController($scope, $navigate, $timeout) {
+function BidResultController($scope, $navigate, $timeout,$http) {
 
     $scope.go_bid_list = function () {
         $navigate.go('/bid_list')
@@ -61,4 +61,5 @@ function BidResultController($scope, $navigate, $timeout) {
             }, 3000)
         }, 1)
     }
+
 }

@@ -1,4 +1,4 @@
-function SignUpController($scope, $navigate) {
+function SignUpController($scope, $navigate,$http) {
 
     $scope.go_activity = function () {
         $navigate.go('/')
@@ -71,4 +71,5 @@ function SignUpController($scope, $navigate) {
     $scope.go_bid_list = function () {
         $navigate.go('/bid_list')
     }
+
 }

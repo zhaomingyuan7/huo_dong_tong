@@ -49,6 +49,6 @@
           %td(align="center" style="width:20%")
             =price
           %td(align="center" style="width:20%")
-            =BidMessage.get_price_number(current_user.name,params[:activity_name],@current_bid,price).length
+            =BidMessage.get_price_number(session[:current_user],params[:activity_name],@current_bid,price).length
   -#.right-padding(align="right")
   -#  = will_paginate @prices, :previous_label=> '<<', :next_label=> '>>'

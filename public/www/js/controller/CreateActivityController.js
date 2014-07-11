@@ -1,4 +1,4 @@
-function CreateActivityController($scope, $navigate) {
+function CreateActivityController($scope, $navigate,$http) {
 
     $scope.input_name = ''
 
@@ -28,4 +28,5 @@ function CreateActivityController($scope, $navigate) {
         }
         return true;
     }
+
 }
